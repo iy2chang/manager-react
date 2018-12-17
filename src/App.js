@@ -11,6 +11,7 @@ import EditEmployee from "./components/editEmployee";
 import NotFound from "./components/notFound";
 import AddCompany from "./components/addCompany";
 import ProtectedRoute from "./components/common/protectedRoute";
+import Profile from "./components/profile";
 import { getCurrentUser } from "./services/authService";
 import "./App.css";
 
@@ -40,6 +41,7 @@ class App extends Component {
             />
             <ProtectedRoute path="/editEmployee/:id" component={EditEmployee} />
             <ProtectedRoute path="/addCompany" component={AddCompany} />
+            <ProtectedRoute path="/profile" component={Profile} />
             <Route path="/not-found" component={NotFound} />
             <Redirect from="/" exact to="/dashboard" />
             <Redirect to="/not-found" />

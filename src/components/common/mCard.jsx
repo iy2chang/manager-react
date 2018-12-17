@@ -15,7 +15,7 @@ const styles = theme => ({
     minWidth: 400,
     maxWidth: 400,
     minHeight: 250,
-    maxHeight: 250,
+    maxHeight: 300,
     marginTop: 15,
     marginLeft: 15
   },
