@@ -9,6 +9,7 @@ import Employee from "./components/employee";
 import AddEmployee from "./components/addEmployee";
 import EditEmployee from "./components/editEmployee";
 import NotFound from "./components/notFound";
+import AddCompany from "./components/addCompany";
 import ProtectedRoute from "./components/common/protectedRoute";
 import { getCurrentUser } from "./services/authService";
 import "./App.css";
@@ -38,6 +39,7 @@ class App extends Component {
               component={AddEmployee}
             />
             <ProtectedRoute path="/editEmployee/:id" component={EditEmployee} />
+            <ProtectedRoute path="/addCompany" component={AddCompany} />
             <Route path="/not-found" component={NotFound} />
             <Redirect from="/" exact to="/dashboard" />
             <Redirect to="/not-found" />

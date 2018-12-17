@@ -12,7 +12,10 @@ import { withStyles } from "@material-ui/core/styles";
 
 const styles = theme => ({
   card: {
+    minWidth: 400,
     maxWidth: 400,
+    minHeight: 250,
+    maxHeight: 250,
     marginTop: 15,
     marginLeft: 15
   },
@@ -42,30 +45,32 @@ class MCard extends Component {
   render() {
     const { classes, name, phone, avatar, notes, id } = this.props;
     return (
-      <Card className={classes.card}>
-        <CardHeader
-          avatar={
-            <Avatar aria-label="Google" className={classes.avatar}>
-              {avatar}
-            </Avatar>
-          }
-          title={name}
-          subheader={phone}
-        />
-        <CardContent>
-          <Typography component="p">{notes}</Typography>
-        </CardContent>
-        <CardActions>
-          <Button
-            className={classes.button}
-            color="primary"
-            size="small"
-            onClick={() => this.handleManage(id)}
-          >
-            Manage
-          </Button>
-        </CardActions>
-      </Card>
+      <div className="d-flex">
+        <Card className={classes.card}>
+          <CardHeader
+            avatar={
+              <Avatar aria-label="Google" className={classes.avatar}>
+                {avatar}
+              </Avatar>
+            }
+            title={name}
+            subheader={phone}
+          />
+          <CardContent>
+            <Typography component="p">{notes}</Typography>
+          </CardContent>
+          <CardActions>
+            <Button
+              className={classes.button}
+              color="primary"
+              size="small"
+              onClick={() => this.handleManage(id)}
+            >
+              Manage
+            </Button>
+          </CardActions>
+        </Card>
+      </div>
     );
   }
 }
