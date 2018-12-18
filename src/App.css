@@ -27,6 +27,17 @@
   right: 100px;
   top: 60px;
 }
+
+.addEmployee {
+  position: absolute;
+  right: 100px;
+  top: 80px;
+}
+
+.displayCompany {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

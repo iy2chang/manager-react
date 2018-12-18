@@ -6,21 +6,12 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Button from "@material-ui/core/Button";
 import DeleteDialog from "../deleteDialog";
+import { getCompanyById } from "../../services/companyService";
 
 class MTable extends Component {
-  state = {};
-
-  // handleDelete = async id => {
-  //   try {
-  //     await deleteEmployee(id);
-  //     const { state } = this.props.location;
-  //     window.location = state ? state.from.pathname : "/";
-  //   } catch (ex) {
-  //     if (ex.response && ex.response === 404) {
-  //       console.log(ex);
-  //     }
-  //   }
-  // };
+  state = {
+    company: ""
+  };
 
   handleEdit = async id => {
     window.location = `/editEmployee/${id}`;
@@ -30,13 +21,25 @@ class MTable extends Component {
     window.location = `/addEmployee/${id}`;
   };
 
+  async componentDidMount() {
+    const { companyId } = this.props;
+    try {
+      const { data: company } = await getCompanyById(companyId);
+      this.setState({ company });
+    } catch (ex) {
+      if (ex.response && ex.response.status === 404) {
+        console.log("company not exist");
+      }
+    }
+  }
   render() {
     const { data, companyId } = this.props;
+    const { company } = this.state;
     if (data.length === 0) {
       return (
         <div>
           <h2>No Data</h2>
-          <div>
+          <div className="addEmployee">
             <Button
               variant="contained"
               color="primary"
@@ -50,10 +53,14 @@ class MTable extends Component {
     }
     return (
       <React.Fragment>
-        <div>
+        <div className="displayCompany">{`You are viewing employees from ${
+          company.name
+        }`}</div>
+        <div className="addEmployee">
           <Button
             variant="contained"
             color="primary"
+            size="small"
             onClick={() => this.handleAdd(companyId)}
           >
             Add
