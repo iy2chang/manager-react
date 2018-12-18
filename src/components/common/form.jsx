@@ -13,7 +13,6 @@ class Form extends Component {
     if (!error) return null;
 
     const errors = {};
-    // console.log("validate", error.details);
     for (let items of error.details) errors[items.path[0]] = items.message;
     return errors;
   };

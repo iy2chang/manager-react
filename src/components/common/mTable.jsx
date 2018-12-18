@@ -5,21 +5,22 @@ import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Button from "@material-ui/core/Button";
-import { deleteEmployee } from "../../services/employeeService";
+import DeleteDialog from "../deleteDialog";
 
 class MTable extends Component {
   state = {};
-  handleDelete = async id => {
-    try {
-      await deleteEmployee(id);
-      const { state } = this.props.location;
-      window.location = state ? state.from.pathname : "/";
-    } catch (ex) {
-      if (ex.response && ex.response === 404) {
-        console.log(ex);
-      }
-    }
-  };
+
+  // handleDelete = async id => {
+  //   try {
+  //     await deleteEmployee(id);
+  //     const { state } = this.props.location;
+  //     window.location = state ? state.from.pathname : "/";
+  //   } catch (ex) {
+  //     if (ex.response && ex.response === 404) {
+  //       console.log(ex);
+  //     }
+  //   }
+  // };
 
   handleEdit = async id => {
     window.location = `/editEmployee/${id}`;
@@ -88,12 +89,11 @@ class MTable extends Component {
                     </Button>
                   </TableCell>
                   <TableCell>
-                    <Button
-                      color="secondary"
-                      onClick={() => this.handleDelete(d._id)}
-                    >
-                      delete
-                    </Button>
+                    <DeleteDialog
+                      id={d._id}
+                      firstName={d.firstName}
+                      companyId={companyId}
+                    />
                   </TableCell>
                 </TableRow>
               );
