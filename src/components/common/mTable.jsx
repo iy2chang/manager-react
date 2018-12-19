@@ -2,16 +2,37 @@ import React, { Component } from "react";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
-import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Button from "@material-ui/core/Button";
 import DeleteDialog from "../deleteDialog";
+import MTableHead from "./mTableHead";
 import { getCompanyById } from "../../services/companyService";
 
 class MTable extends Component {
   state = {
     company: ""
   };
+
+  columns = [
+    {
+      path: "firstName",
+      label: "First Name"
+    },
+    { path: "lastName", label: "Last Name" },
+    { path: "salary", label: "Salary" },
+    {
+      path: "company.name",
+      label: "Company"
+    },
+    {
+      path: "edit",
+      label: "Edit"
+    },
+    {
+      path: "delete",
+      label: "Delete"
+    }
+  ];
 
   handleEdit = async id => {
     window.location = `/editEmployee/${id}`;
@@ -32,8 +53,9 @@ class MTable extends Component {
       }
     }
   }
+
   render() {
-    const { data, companyId } = this.props;
+    const { data, companyId, sortColumn } = this.props;
     const { company } = this.state;
     if (data.length === 0) {
       return (
@@ -51,6 +73,7 @@ class MTable extends Component {
         </div>
       );
     }
+
     return (
       <React.Fragment>
         <div className="displayCompany">{`You are viewing employees from ${
@@ -67,16 +90,7 @@ class MTable extends Component {
           </Button>
         </div>
         <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>First Name</TableCell>
-              <TableCell>Last Name</TableCell>
-              <TableCell>Salary</TableCell>
-              <TableCell>Company</TableCell>
-              <TableCell>Edit Emp</TableCell>
-              <TableCell>Delete Emp</TableCell>
-            </TableRow>
-          </TableHead>
+          <MTableHead columns={this.columns} sortColumn={sortColumn} />
           <TableBody>
             {data.map(d => {
               return (
@@ -88,6 +102,7 @@ class MTable extends Component {
                   <TableCell>
                     <Button
                       color="secondary"
+                      size="small"
                       onClick={() => {
                         this.handleEdit(d._id);
                       }}
