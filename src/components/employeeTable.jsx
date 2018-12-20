@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Table from "./common/table";
+import DeleteDialog from "./deleteDialog";
 
 class EmployeeTable extends Component {
   columns = [
@@ -29,12 +30,15 @@ class EmployeeTable extends Component {
       path: "delete",
       label: "Delete",
       content: employee => (
-        <button
-          onClick={() => this.props.onDelete(employee)}
-          className="btn btn-danger btn-sm"
-        >
-          Delete
-        </button>
+        <React.Fragment>
+          <DeleteDialog onClick={() => this.props.onDelete(employee)} />
+          {/* <button
+            onClick={this.handleClickOpen}
+            className="btn btn-danger btn-sm"
+          >
+            Delete
+          </button> */}
+        </React.Fragment>
       )
     }
   ];

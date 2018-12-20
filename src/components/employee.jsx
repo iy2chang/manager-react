@@ -13,7 +13,8 @@ class Employees extends Component {
     currentPage: 1,
     pageSize: 5,
     searchQuery: "",
-    sortColumn: { path: "firstName", order: "asc" }
+    sortColumn: { path: "firstName", order: "asc" },
+    open: false
   };
 
   async componentDidMount() {
@@ -37,13 +38,11 @@ class Employees extends Component {
     const originalEmployees = this.state.employees;
     const employees = originalEmployees.filter(e => e._id !== employee._id);
     this.setState({ employees });
-
     try {
       await deleteEmployee(employee._id);
     } catch (ex) {
       if (ex.response && ex.response.status === 404)
         toast.error("This employee has already been deleted.");
-
       this.setState({ employees: originalEmployees });
     }
   };

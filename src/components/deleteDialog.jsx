@@ -1,11 +1,10 @@
 import React, { Component } from "react";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import DialogActions from "@material-ui/core/DialogActions";
-import { deleteEmployee } from "../services/employeeService";
 
 class DeleteDialog extends Component {
   state = {
@@ -16,28 +15,24 @@ class DeleteDialog extends Component {
     this.setState({ open: true });
   };
 
-  handleCloseCancel = () => {
+  handleClose = () => {
     this.setState({ open: false });
   };
 
-  handleDelete = async () => {
+  handleAgreeClose = async employee => {
     this.setState({ open: false });
-    const { id, companyId } = this.props;
-    try {
-      await deleteEmployee(id);
-      window.location = `/employees/${companyId}`;
-    } catch (ex) {
-      if (ex.response && ex.response === 404) {
-        console.log("employee not found");
-      }
-    }
+    this.props.onClick();
   };
 
   render() {
-    const { firstName } = this.props;
     return (
       <div>
-        <Button color="secondary" onClick={this.handleClickOpen}>
+        <Button
+          variant="outlined"
+          color="primary"
+          size="small"
+          onClick={this.handleClickOpen}
+        >
           Delete
         </Button>
         <Dialog
@@ -46,18 +41,22 @@ class DeleteDialog extends Component {
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
-          <DialogTitle id="alert-dialog-title">Confirm Delete</DialogTitle>
+          <DialogTitle id="alert-dialog-title">{"Confirm Delete"}</DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
-              {`Are you sure you want to delete ${firstName}`}
+              Are you sure you want to delete?
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.handleCloseCancel} color="primary">
-              Cancel
+            <Button onClick={this.handleClose} color="primary">
+              Disagree
             </Button>
-            <Button onClick={this.handleDelete} color="primary" autoFocus>
-              Delete
+            <Button
+              onClick={() => this.handleAgreeClose(this.props.employee)}
+              color="primary"
+              autoFocus
+            >
+              Agree
             </Button>
           </DialogActions>
         </Dialog>
